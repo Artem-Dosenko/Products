@@ -1,11 +1,16 @@
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class ProductDiscountDate {
+public class ProductDiscountDateID {
     private String type;
     private double price;
     private boolean discount;
     private LocalDate createDate;
+    private int id;
 
     public String getType() {
         return type;
@@ -39,35 +44,35 @@ public class ProductDiscountDate {
         this.createDate = createDate;
     }
 
-    public ProductDiscountDate(String type, double price, boolean discount, LocalDate createDate) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ProductDiscountDateID(String type, double price, boolean discount, LocalDate createDate, int id) {
         this.type = type;
         this.price = price;
         this.discount = discount;
         this.createDate = createDate;
+        this.id = id;
     }
 
-    public static List<ProductDiscountDate> findThreeLast(List<ProductDiscountDate> productDiscountDates){
-        return productDiscountDates.stream()
-                .skip(productDiscountDates.size() - 3)
-                .peek(System.out::println)
-                .toList();
+    public static Map<String, List<ProductDiscountDateID>> sortByType(List<ProductDiscountDateID> products){
+        return products.stream()
+                .collect(Collectors.groupingBy(s -> s.type));
     }
-
-    public static double calculateBooksPrice(List<ProductDiscountDate> productDiscountDates) {
-        return productDiscountDates.stream()
-                .filter(s -> s.getCreateDate().getYear() < 2025 || s.getType().equals("Book") || s.getPrice() < 75)
-                .mapToDouble(ProductDiscountDate::getPrice)
-                .sum();
-    }
-
 
     @Override
     public String toString() {
-        return "ProductDiscountDate{" +
+        return "ProductDiscountDateID{" +
                 "type='" + type + '\'' +
                 ", price=" + price +
                 ", discount=" + discount +
                 ", createDate=" + createDate +
+                ", id=" + id +
                 '}';
     }
 }
