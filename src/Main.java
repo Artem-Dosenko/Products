@@ -1,5 +1,7 @@
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -59,5 +61,17 @@ public class Main {
         double sumOfBookPrices = ProductDiscountDate.calculateBooksPrice(productsDiscountDates1);
         System.out.println();
         System.out.println("Sum of books' price: " + sumOfBookPrices);
+        System.out.println(separation);
+
+        List<ProductDiscountDateID> productDiscountDateIDS = List.of(new ProductDiscountDateID("Book", 72, true, LocalDate.of(2025, 1, 31), 0)
+                                                                    ,new ProductDiscountDateID("TV", 1500, true, LocalDate.of(2025, 2, 3), 1)
+                                                                    ,new ProductDiscountDateID("Guitar", 1000, false, LocalDate.of(2025, 1, 30), 2)
+                                                                    ,new ProductDiscountDateID("Book", 26, false, LocalDate.of(2025, 2, 1), 3)
+                                                                    ,new ProductDiscountDateID("Book", 100, true, LocalDate.of(2025, 1, 29),3));
+        Map<String, List<ProductDiscountDateID>> sortedProducts = ProductDiscountDateID.sortByType(productDiscountDateIDS);;
+        productDiscountDateIDS.forEach(System.out::println);
+        System.out.println();
+        sortedProducts.forEach((a, b) -> System.out.println(a + " " + b));
+
     }
 }
